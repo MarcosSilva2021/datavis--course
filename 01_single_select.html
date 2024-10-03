@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selecionando um unico div add a body</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        d3.select("body")
+        .append("div")
+        .style("font-size", "24px")
+        .style("border", "1px black solid")
+        .style("background-color", "yellow")
+        .attr("id", "newdiv")
+        .text("Olá mundo crueuuu")
+
+        d3.select("div#newdiv")
+        .append("p")
+        .style("background-color", "lightblue")
+        .text("este é um paragrafo")
+    </script>
+    
+</body>
+</html>
