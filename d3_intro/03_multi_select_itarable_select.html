@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selecionando múltiplos elementos</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<body>
+
+    <div></div>
+    <div></div>
+    <div></div>
+
+    <script type="text/javascript">
+        d3.selectAll("div")
+        .attr("class", "red box")
+        .each(function(d, i) {
+            d3.selectAll(this).append("h1").text(i);
+        });
+
+    </script>
+    
+</body>
+
+</html>
