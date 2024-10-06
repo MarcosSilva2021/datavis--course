@@ -25,7 +25,7 @@ h1 {
     color: #3F3F3F;
 }
 
-h-bar {
+.h-bar {
     min-height: 15px;
     min-width: 10px;
     background-color: steelblue;
