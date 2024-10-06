@@ -17,7 +17,16 @@
         d3.selectAll("div")
         .attr("class", "red box")
         .each(function(d, i) {
-            d3.select(this).append("h1").text(i).svg(circle , cx="25", cy="25", r="22", fill="red");
+            d3.select(this).append("h1").text(i);
+            d3.select(this)
+            .append("svg")
+            .attr("width", 200)
+            .attr("height", 100)
+            .append("circle")
+            .attr("r", 20)
+            .attr("cx", 100)
+            .attr("cy", 50)
+            .attr("fill", "white");
         });
 
     </script>
