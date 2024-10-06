@@ -8,3 +8,6 @@ numbers[0] //retorna 5
 numbers[3] //retorna 20
 
 var names = ["Pedro", "Paulo", "Joana"];
+
+// é possível, mas não recomendado
+var multiplos = [1, 2, 3.5, "texto", true];
