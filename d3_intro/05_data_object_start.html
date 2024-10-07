@@ -19,20 +19,20 @@
             {width: 9, color: 12}
         ];
 
-        let  colorScale = d3.scalerLiner()
+        let  colorScale = d3.scaleLinear()
             .domain([0 , 100])
             .range(["#ece7f2", "#023858"]);// Escala de cor
 
         function render(data) {
             // Enter
-            d3.select("body").selectall("div.h.bar")
+            d3.select("body").selectAll("div.h-bar")
                 .data(data)
                 .enter()
                     .append("div")
                         .attr("class", "h-bar")
                     .append("span");
             //update
-            d3.select("body").selectall("div.h-bar")
+            d3.select("body").selectAll("div.h-bar")
                 .data(data)
                     .style("width", function (d){
                         // codigo de atualização
