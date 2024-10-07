@@ -42,8 +42,13 @@
                         // codigo de atuali
                                 return colorScale(d.color);
                     })
+                    .select("span")
+                        .text(function (d){
+                            // codigo de imple
+                                return d.width;
+                        });
         }
-
+        render(data);
 
     </script>
     
