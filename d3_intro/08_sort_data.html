@@ -3,9 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
     <title>Ordenando os Dados</title>
 </head>
 <body>
+    <div id="chart"></div>
+    <script type="text/javascript">
+        function render(data, comparator){
+            d3.select("#chart")
+                .selectAll("div.h-bar")
+                .data(data)
+                .enter()
+                .append("div")
+                .attr("class","h-bar")
+                .append("span");
+
+            d3.select("#chart")
+                .selectAll("div.h-bar")
+                .data(data)
+                .attr("width", function (d){
+                    return d.despesa * 10 + "px";
+                })
+        }
+
+    </script>
     
 </body>
 </html>
