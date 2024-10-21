@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,25 +9,34 @@
 
     <title>Inserindo dados do array em um gráfico em barras</title>
 </head>
+
 <body>
 
     <script type="text/javascript">
+        // Define um array de dados que será utilizado para renderizar elementos.
         let data = [10, 15, 30, 50, 80, 65, 55, 30, 20, 10, 8];
+
+        // A função render(data) é responsável por criar e renderizar 
+        // os elementos com base nos dados fornecidos.
         function render(data) {
-            // Enter
+            // Seletor para selecionar todos os elementos <div> com a classe "h-bar".
             d3.select("body").selectAll("div.h-bar")
-                .data(data)
-                .enter()
-                    .append("div")
-                        .attr("class", "h-bar")
-                        .style("width", function(d){return 3*d+"px"})
-                      //primeiro formato .style("width", d=> 3*d+"px")
-                      //segundo formato .style("width", function(d){return 3*d+"px"})
-                        
-                    .append("span").text(function(d){ return d});
+                .data(data) // Junta os dados à seleção existente.
+                .enter() // Seleciona os elementos que ainda não existem.
+                .append("div") // Para cada novo dado, adiciona um novo <div>.
+                .attr("class", "h-bar") // Define a classe "h-bar" para o <div>.
+                .style("width", function (d) { return 3 * d + "px"; }) // Define a largura do <div> com base no valor do dado.
+                // Alternativa de sintaxe para a função de largura:
+                // .style("width", d => 3 * d + "px")
+
+                // Adiciona um <span> dentro do <div> recém-criado.
+                .append("span").text(function (d) { return d; }); // Define o texto do <span> com o valor do dado.
         }
+
+        // Chama a função render para exibir os dados.
         render(data);
     </script>
-    
+
 </body>
+
 </html>

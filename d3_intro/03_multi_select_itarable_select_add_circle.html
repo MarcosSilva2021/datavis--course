@@ -9,23 +9,34 @@
 </head>
 <body>
 
+    <!-- Criação de três elementos div vazios -->
     <div></div>
     <div></div>
     <div></div>
 
     <script type="text/javascript">
+        // Seleciona todos os elementos <div> no documento
         d3.selectAll("div")
+        // Adiciona a classe "red box" a cada um dos <div>
         .attr("class", "red box")
+        // Para cada <div> selecionada, executa a função abaixo
         .each(function(d, i) {
+            // Adiciona um elemento <h1> dentro do <div> atual e define seu texto como o índice (i)
             d3.select(this).append("h1").text(i);
+            // Adiciona um elemento <svg> ao <div> atual
             d3.select(this)
             .append("svg")
+            // Define a largura e a altura do SVG
             .attr("width", 200)
             .attr("height", 100)
+            // Adiciona um círculo dentro do SVG
             .append("circle")
+            // Define o raio do círculo
             .attr("r", 20)
+            // Define a posição do centro do círculo
             .attr("cx", 100)
             .attr("cy", 50)
+            // Define a cor de preenchimento do círculo
             .attr("fill", "white");
         });
 

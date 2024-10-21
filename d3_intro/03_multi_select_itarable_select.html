@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,21 +8,28 @@
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://d3js.org/d3.v5.min.js"></script>
 </head>
+
 <body>
 
-    <div></div>
-    <div></div>
-    <div></div>
+    <div></div> <!-- Primeiro <div> vazio -->
+    <div></div> <!-- Segundo <div> vazio -->
+    <div></div> <!-- Terceiro <div> vazio -->
 
     <script type="text/javascript">
+        
+        // seleciona todos os <div> presentes na página, 
+        // permitindo que você aplique alterações a todos eles de uma vez.
         d3.selectAll("div")
-        .attr("class", "red box")
-        .each(function(d, i) {
-            d3.select(this).append("h1").text(i);
-        });
+            .attr("class", "red box") // Atribui a classe "red box" a todos os <div>s selecionados.
+            .each(function (d, i) { // Para cada <div> selecionado, executa uma função.
+                // `this` refere-se ao elemento atual sendo iterado.
+                d3.select(this) // Seleciona o <div> atual.
+                    .append("h1") // Adiciona um elemento <h1> dentro do <div>.
+                    .text(i); // Define o texto do <h1> como o índice do elemento (0, 1, 2).
+            });
 
     </script>
-    
+
 </body>
 
 </html>

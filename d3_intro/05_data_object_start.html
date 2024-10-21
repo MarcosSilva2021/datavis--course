@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,50 +8,58 @@
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <title>Vinculando um vetor de objetos</title>
 </head>
+
 <body>
-    
+
     <script type="text/javascript">
+        // Define um array de objetos, cada um contendo propriedades de largura e cor.
         let data = [
-            {width: 10, color: 23}, {width: 15, color: 33},
-            {width: 30, color: 40}, {width: 50, color: 60},
-            {width: 80, color: 22}, {width: 65, color: 10},
-            {width: 55, color: 5}, {width: 30, color: 30},
-            {width: 20, color: 60}, {width: 10, color: 90},
-            {width: 9, color: 12}
+            { width: 10, color: 23 }, { width: 15, color: 33 },
+            { width: 30, color: 40 }, { width: 50, color: 60 },
+            { width: 80, color: 22 }, { width: 65, color: 10 },
+            { width: 55, color: 5 }, { width: 30, color: 30 },
+            { width: 20, color: 60 }, { width: 10, color: 90 },
+            { width: 9, color: 12 }
         ];
 
-        let  colorScale = d3.scaleLinear()
-            .domain([0 , 100])
-            .range(["#ece7f2", "#023858"]);// Escala de cor
+        // Cria uma escala de cores linear.
+        let colorScale = d3.scaleLinear()
+            .domain([0, 100]) // Define o intervalo de entrada da escala.
+            .range(["#ece7f2", "#023858"]); // Define as cores correspondentes na saída.
 
+        // Função que renderiza os dados na tela.
         function render(data) {
-            // Enter
+            // Seletor para novos elementos.
             d3.select("body").selectAll("div.h-bar")
                 .data(data)
-                .enter()
-                    .append("div")
-                        .attr("class", "h-bar")
-                    .append("span");
-            //update
+                .enter() // Para dados que não têm correspondência no DOM.
+                .append("div") // Adiciona um novo <div> para cada dado.
+                .attr("class", "h-bar") // Define a classe "h-bar" para o <div>.
+                .append("span"); // Adiciona um <span> dentro do <div>.
+
+            // Atualização dos elementos existentes.
             d3.select("body").selectAll("div.h-bar")
-                .data(data)
-                    .style("width", function (d){
-                        // codigo de atualização
-                                return 3*d.width+"px";
-                    })
-                    .style("background-color", function(d){
-                        // codigo de atuali
-                                return colorScale(d.color);
-                    })
-                    .select("span")
-                        .text(function (d){
-                            // codigo de imple
-                                return d.width;
-                        });
+                .data(data) // Associa novamente os dados aos elementos existentes.
+                .style("width", function (d) {
+                    // Define a largura do <div> com base no valor de width.
+                    return 3 * d.width + "px";
+                })
+                .style("background-color", function (d) {
+                    // Define a cor de fundo com base na escala de cores.
+                    return colorScale(d.color);
+                })
+                .select("span")
+                .text(function (d) {
+                    // Define o texto do <span> como o valor de width.
+                    return d.width;
+                });
         }
+
+        // Chama a função render para exibir os dados.
         render(data);
 
     </script>
-    
+
 </body>
+
 </html>

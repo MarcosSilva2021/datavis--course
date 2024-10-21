@@ -8,18 +8,21 @@
 </head>
 <body>
     <script type="text/javascript">
+       
+        // Seleciona o elemento <body> e adiciona um novo <div> a ele.
         d3.select("body")
-        .append("div")
-        .style("font-size", "24px")
-        .style("border", "1px black solid")
-        .style("background-color", "yellow")
-        .attr("id", "newdiv")
-        .text("Olá mundo crueuuu")
+            .append("div") // Adiciona um novo <div> ao corpo da página.
+            .style("font-size", "24px") // Define o tamanho da fonte para 24 pixels.
+            .style("border", "1px black solid") // Adiciona uma borda sólida preta ao <div>.
+            .style("background-color", "yellow") // Define a cor de fundo do <div> como amarelo.
+            .attr("id", "newdiv") // Atribui um ID "newdiv" ao <div> para identificá-lo posteriormente.
+            .text("Olá mundo da Progrmação") // Define o texto exibido dentro do <div>.
 
+        // Seleciona o <div> com ID "newdiv" para adicionar mais conteúdo.
         d3.select("div#newdiv")
-        .append("p")
-        .style("background-color", "lightblue")
-        .text("este é um paragrafo")
+            .append("p") // Adiciona um novo elemento <p> (parágrafo) dentro do <div>.
+            .style("background-color", "lightblue") // Define a cor de fundo do parágrafo como azul claro.
+            .text("este é um paragrafo") // Define o texto exibido dentro do parágrafo.
     </script>
     
 </body>
