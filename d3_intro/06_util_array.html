@@ -1,38 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/styles.css">
-        <script src="https://d3js.org/d3.v5.min.js"></script>
-        <title>Funções p/ Lidar com vetores de dados</title>
-    </head>
-    <body>
-        <div class="code">let array = [3, 2, 11, 7, 6, 4, 10, 8, 15];</div>
-        <div>d3.min => <span id="min"></span></div>
-        <div>d3.max => <span id="max"></span></div>
-        <div>d3.extent =><span id="extent"></span></div>
-        <div>d3.sum => <span id="sum"></span></div>
-        <div>d3.median => <span id="median"></span></div>
-        <div>d3.mean => <span id="mean"></span></div>
-        <div>array.sort(d3.ascending) => <span id="asc"></span></div>
-        <div>array.sort(d3.descending) => <span id="desc"></span></div>
-        <div>d3.quantile(array.sort(d3.ascending), 0.25) => <span id="quantile"></span></div>
 
-        <script type="text/javascript">
-            let array = [3, 2, 11, 7, 6, 4, 10, 8, 15];
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <title>Funções p/ Lidar com vetores de dados -- realizar operações estatísticas em um array de números.</title>
+</head>
 
-            d3.select("#min").text(d3.min(array));
-            d3.select("#max").text(d3.max(array));
-            d3.select("#extent").text(d3.extent(array));
-            d3.select("#sum").text(d3.sum(array));
-            d3.select("#median").text(d3.median(array));
-            d3.select("#mean").text(d3.mean(array));
-            d3.select("#asc").text(array.sort(d3.ascending));
-            d3.select("#desc").text(array.sort(d3.descending));
-            d3.select("#quantile").text(d3.quantile(array.sort(d3.ascending), 0.25));
+<body>
+    <!-- Declaração do array com números -->
+    <div class="code">let array = [3, 2, 11, 7, 6, 4, 10, 8, 15];</div>
 
-        </script>   
+    <!-- Elementos para exibir os resultados das operações estatísticas -->
+    <div>d3.min => <span id="min"></span></div>
+    <div>d3.max => <span id="max"></span></div>
+    <div>d3.extent => <span id="extent"></span></div>
+    <div>d3.sum => <span id="sum"></span></div>
+    <div>d3.median => <span id="median"></span></div>
+    <div>d3.mean => <span id="mean"></span></div>
+    <div>array.sort(d3.ascending) => <span id="asc"></span></div>
+    <div>array.sort(d3.descending) => <span id="desc"></span></div>
+    <div>d3.quantile(array.sort(d3.ascending), 0.25) => <span id="quantile"></span></div>
 
-    </body>
+    <script type="text/javascript">
+
+        // Definição do array com números
+        let array = [3, 2, 11, 7, 6, 4, 10, 8, 15];
+
+        // Seleciona o elemento com ID "min" e define seu texto como o menor valor do array
+        d3.select("#min").text(d3.min(array));
+        // Seleciona o elemento com ID "max" e define seu texto como o maior valor do array
+        d3.select("#max").text(d3.max(array));
+        // Seleciona o elemento com ID "extent" e define seu texto como o intervalo (menor e maior valor)
+        d3.select("#extent").text(d3.extent(array));
+        // Seleciona o elemento com ID "sum" e define seu texto como a soma dos valores do array
+        d3.select("#sum").text(d3.sum(array));
+        // Seleciona o elemento com ID "median" e define seu texto como a mediana dos valores
+        d3.select("#median").text(d3.median(array));
+        // Seleciona o elemento com ID "mean" e define seu texto como a média dos valores
+        d3.select("#mean").text(d3.mean(array));
+        // Seleciona o elemento com ID "asc" e define seu texto como o array ordenado em ordem crescente
+        d3.select("#asc").text(array.sort(d3.ascending));
+        // Seleciona o elemento com ID "desc" e define seu texto como o array ordenado em ordem decrescente
+        d3.select("#desc").text(array.sort(d3.descending));
+        // Seleciona o elemento com ID "quantile" e define seu texto como o primeiro quartil (25%) dos valores
+        d3.select("#quantile").text(d3.quantile(array.sort(d3.ascending), 0.25));
+    </script>
+
+</body>
+
 </html>
