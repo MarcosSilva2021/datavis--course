@@ -8,49 +8,55 @@
   </head>
   <body>
     <header>
-      <h1>Gráfico de Filmes por Orçamento & bilheteria</h1>
+      <h1>Gráfico de Filmes por Orçamento & Bilheteria</h1>
     </header>
     <div id="bar-movies"></div>
 
     <script type="text/javascript">
+      // Define a função render que recebe dados e um comparador
       function render(data, comparator) {
-        // Criando os elementos HTML que ainda nao existem!
-        d3.select("#bar-movies")
-          .selectAll("div.h-bar")
-          .data(data)
-          .enter()
-          .append("div")
-          .attr("class", "h-bar")
-          .append("span");
-
-        // Atualizando os elementos HTML que ja existem!
-        d3.select("#bar-movies")
-          .selectAll("div.h-bar")
-          .data(data)
-          .attr("class", "h-bar")
-          .style("width", function (d) {
-            return (d.Worldwide_Gross_M)  + "px";
+        
+        // Criando os elementos HTML que ainda não existem!
+        d3.select("#bar-movies") // Seleciona o contêiner com o ID 'bar-movies'
+          .selectAll("div.h-bar") // Seleciona todos os divs com a classe 'h-bar'
+          .data(data) // Vincula os dados ao elemento
+          .enter() // Identifica os novos dados que ainda não têm elementos associados
+          .append("div") // Adiciona um novo div para cada novo dado
+          .attr("class", "h-bar") // Define a classe do div como 'h-bar'
+          .append("span"); // Adiciona um span dentro de cada div
+    
+        // Atualizando os elementos HTML que já existem!
+        d3.select("#bar-movies") // Seleciona novamente o contêiner
+          .selectAll("div.h-bar") // Seleciona todos os divs com a classe 'h-bar'
+          .data(data) // Vincula os dados novamente (atualização)
+          .attr("class", "h-bar") // Garante que a classe seja 'h-bar'
+          .style("width", function (d) { // Define a largura das barras
+            return (d.Worldwide_Gross_M) + "px"; // Define a largura em pixels com base na receita mundial
           })
-          .select("span")
-          .text(function (d) {
-            return (d.Film);
+          .select("span") // Seleciona o span dentro de cada div
+          .text(function (d) { // Atualiza o texto do span
+            return (d.Film); // Define o texto como o nome do filme
           });
-
+    
+        // Se um comparador for fornecido, ordena as barras
         if (comparator) {
-          d3.select("#bar-movies").selectAll("div.h-bar").sort(comparator);
+          d3.select("#bar-movies").selectAll("div.h-bar").sort(comparator); // Ordena os divs com base no comparador
         }
       }
-
+    
+      // Função de comparação para a receita mundial
       let measureTotalGross = function (a, b) {
-        return a.Worldwide_Gross_M - b.Worldwide_Gross_M;
+        return a.Worldwide_Gross_M - b.Worldwide_Gross_M; // Retorna a diferença entre as receitas
       };
-
+    
+      // Função de comparação para o orçamento
       let measureTotalBudget = function (a, b) {
-        return a.Budget_M - b.Budget_M;
+        return a.Budget_M - b.Budget_M; // Retorna a diferença entre os orçamentos
       };
-
+    
+      // Carrega os dados de um arquivo JSON e renderiza as barras
       d3.json("data/movies_d3.json").then(function (json) {
-        render(json, measureTotalBudget);
+        render(json, measureTotalBudget); // Chama a função render com os dados e a função de comparação
       });
     </script>
   </body>
