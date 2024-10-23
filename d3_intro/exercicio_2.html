@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <title>Exercicio 2 -- gráfico de barras de filmes</title>
+</head>
+<body>
+    <label for="compare">Compare to:</label>
+    <select name="movies" id="movies">
+        <option value="gross">Gross</option>
+        <option value="budget">Budget</option>
+    </select>
+
+    <h1>Bar gráfico por dados de filmes</h1>
+    <div id="bar-movies"></div>
+
+    <h1>Gráfico de barras por orçamento</h1>
+    <div id="bar-movies"></div>
+
+    <script type="text/javascript">
+        let colorScale = d3.scaleLinear()
+            .domain([600, 100])
+            .ranger(["#008000", "#FF0000"]); // escala de cor
+
+
+    </script>
+    
+    
+</body>
+</html>
