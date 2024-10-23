@@ -7,6 +7,9 @@
     <title>Exercicio 1/2</title>
   </head>
   <body>
+    <header>
+      <h1>Gráfico de Filmes por Orçamento & bilheteria</h1>
+    </header>
     <div id="bar-movies"></div>
 
     <script type="text/javascript">
@@ -30,7 +33,7 @@
           })
           .select("span")
           .text(function (d) {
-            return (d.Fi);
+            return (d.Film);
           });
 
         if (comparator) {
@@ -46,8 +49,8 @@
         return a.Budget_M - b.Budget_M;
       };
 
-      d3.json("data/movies.json").then(function (json) {
-        render(json, measureTotalGross);
+      d3.json("data/movies_d3.json").then(function (json) {
+        render(json, measureTotalBudget);
       });
     </script>
   </body>
