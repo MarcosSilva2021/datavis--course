@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head> 
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gra barras</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+    <style>
+        .h-bar {
+            min-height: 15px;
+            min-width: 10px;
+            background-color: steelblue;
+            margin-bottom: 2px;
+            font-size: 11px;
+            color: #f0f8ff;
+            text-align: right;
+            padding-right: 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script type="text/javascript">
+        let myValues = [1, 53, 64, 23, 21, 12, 98, 9, 2];
+
+        function render(data) {
+        // criação dos elementos
+        d3.select("body")
+            .selectAll("div.h-bar")
+            .data(myValues)
+            .enter()
+            .append("div")
+            .attr("class", "h-bar")
+            .append("span")
+            .style("width", function (d) { return 3 * d + "px"; });
+
+        // atualização dos elementos
+        d3.select("graph")
+        .selectAll("div.h-bar")       
+        .data(myValues)
+        .style("width", function (d) {
+            return (5 + d) + 'px';
+        })
+        .select("span")
+        .text(function (d) {
+            return (d);
+        });
+        }
+
+
+    </script>
+</body>
+
+</html>
