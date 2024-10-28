@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head> 
+<head>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gráfico de barras</title>
     <script src="https://d3js.org/d3.v5.min.js"></script>
-    <link rel="stylesheet" href="../css/styles.css"> 
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 
 <body>
-    <header><h2>O gráfico de barras</h2></header>
+    <header>
+        <h2>O gráfico de barras</h2>
+    </header>
 
     <div id="graph"></div>
 
@@ -20,28 +22,29 @@
 
         function render(data) {
 
-        // criação dos elementos
-        d3.select("#graph")
-            .selectAll("div.h-bar")
-            .data(myValues.sort(d3.ascending))
-            .enter()
-            .append("div")
-            .attr("class", "h-bar")
-            .append("span");
-            
-        // atualização dos elementos
-        d3.select("graph")
-        .selectAll("div.h-bar")       
-        .data(myValues)
-        .style("width", function (d) {
-            return (5 + d) + 'px';
-        })
-        .select("span")
-        .text(function (d) {
-            return (d);
-        });
+            // criação dos elementos
+            d3.select("#graph")
+                .selectAll("div.h-bar")
+                .data(myValues.sort(d3.ascending))
+                .enter()
+                .append("div")
+                .attr("class", "h-bar")
+                .append("span");
+
+            // atualização dos elementos
+            d3.select("#graph")
+                .selectAll("div.h-bar")
+                .data(myValues.sort(d3.ascending))
+                .style("width", function (d) {
+                    return (5 + d) + 'px';
+                })
+                .select("span")
+                .text(function (d) {
+                    return (d);
+                });
         }
 
+        render(myValues);
 
     </script>
 </body>
