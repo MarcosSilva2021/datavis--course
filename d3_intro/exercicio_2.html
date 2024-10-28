@@ -81,6 +81,19 @@
             }
         });
 
+        /** Exercicio 2**/
+
+        function render2(data, comparator){
+            // criando os elementos HTML que ainda não existem
+            d3.select("#bar-movies-budget")
+                .selectAll("div.h-bar")
+                .data(data)
+                .enter()
+                .append("div")
+                .attr("class", "h-bar")
+                .append("span");
+        }
+
     </script> 
     
 </body>
