@@ -7,27 +7,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gráfico de barras</title>
     <script src="https://d3js.org/d3.v5.min.js"></script>
-    <link rel="stylesheet" href="../css/styles.css">
-
- 
+    <link rel="stylesheet" href="../css/styles.css"> 
 </head>
 
 <body>
+    <header><h2>O gráfico de barras</h2></header>
+
+    <div id="graph"></div>
 
     <script type="text/javascript">
         let myValues = [1, 53, 64, 23, 21, 12, 98, 9, 2];
 
         function render(data) {
+
         // criação dos elementos
-        d3.select("body")
+        d3.select("#graph")
             .selectAll("div.h-bar")
-            .data(myValues)
+            .data(myValues.sort(d3.ascending))
             .enter()
             .append("div")
             .attr("class", "h-bar")
-            .append("span")
-            .style("width", function (d) { return 3 * d + "px"; });
-
+            .append("span");
+            
         // atualização dos elementos
         d3.select("graph")
         .selectAll("div.h-bar")       
