@@ -92,6 +92,20 @@
                 .append("div")
                 .attr("class", "h-bar")
                 .append("span");
+
+            // atualizar os elementos html que já existem !
+            d3.select("#bar-movies-budget")
+                .selectAll("div.h-bar")
+                .data(data)
+                .attr("class", "h-bar")
+                .style("background-color", "#9B111E")
+                .style("width", function (d) {
+                    return (d.Budget_M) + "px";
+                })
+                .select("span")
+                .text( function (d) {
+                    return (d.Genre);
+                })
         }
 
     </script> 
