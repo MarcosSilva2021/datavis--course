@@ -8,6 +8,9 @@
     <title>Exercicio 2 -- gráfico de barras de filmes</title>
 </head>
 <body>
+    <!-- Criar gráficos de barras com dados de filmes. O código está estruturado 
+     para permitir a comparação entre dois aspectos: a receita bruta e o orçamento dos filmes.
+    -->
     <label for="compare">Compare to:</label>
     <select name="movies" id="movies">
         <option value="gross">Gross</option>
@@ -21,99 +24,111 @@
     <div id="bar-movies-budget"></div>
 
     <script type="text/javascript">
+        // Define uma escala de cores que varia entre verde e vermelho com base nos valores de receita
         let colorScale = d3.scaleLinear()
-            .domain([600, 1000])
-            .range(["#008000", "#FF0000"]); // escala de cor
+            .domain([600, 1000]) // Define os valores mínimo e máximo da escala
+            .range(["#008000", "#FF0000"]); // Cor correspondente aos valores do domínio
 
-        function render(data, comparator){
-            // criando elementos html que ainda não esxitem
+        // Função que renderiza o gráfico de barras com base nos dados e um comparador
+        function render(data, comparator) {
+            // Seleciona o div para o gráfico de receitas e vincula os dados
+            d3.select("#bar-movies")
+                .selectAll("div.h-bar") // Seleciona todas as barras existentes
+                .data(data) // Vincula os dados a esses elementos
+                .enter() // Identifica novos dados que não têm elementos correspondentes
+                .append("div") // Adiciona um novo div para cada novo dado
+                .attr("class", "h-bar") // Define a classe CSS para os novos elementos
+                .append("span"); // Adiciona um span dentro de cada div para texto
+
+            // Atualiza os elementos existentes
             d3.select("#bar-movies")
                 .selectAll("div.h-bar")
-                .data(data)
-                .enter()
-                .append("div")
-                .attr("class", "h-bar")
-                .append("span");
-
-            // Atualizando os elementos HTML que já existem !
-            d3.select("#bar-movies")
-                .selectAll("div.h-bar")
-                .data(data)
-                .attr("class", "h-bar")
-                .style("background-color", function (d) {
-                    return colorScale(d.Worldwide_Gross_M);
+                .data(data) // Vincula novamente os dados (atualiza)
+                .attr("class", "h-bar") // Mantém a classe
+                .style("background-color", function(d) {
+                    return colorScale(d.Worldwide_Gross_M); // Define a cor de fundo com base na receita
                 })
-                .style("width", function (d){
-                    return (d.Worldwide_Gross_M) + "px";
+                .style("width", function(d) {
+                    return (d.Worldwide_Gross_M) + "px"; // Define a largura da barra com base na receita
                 })
-                .select("span")
-                .text(function (d){
-                    return (d.Worldwide_Gross_M);
+                .select("span") // Seleciona o span dentro de cada div
+                .text(function(d) {
+                    return (d.Worldwide_Gross_M); // Define o texto como a receita
                 });
 
-                if (comparator) {
-                    d3.select("#bar-movies").selectAll("div.h-bar").sort(comparator);
-                }
+            // Se um comparador for fornecido, ordena as barras
+            if (comparator) {
+                d3.select("#bar-movies").selectAll("div.h-bar").sort(comparator);
+            }
         }
 
-        let measureTotalGross = function (a, b) {
-            return a.Worldwide_Gross_M - b.Worldwide_Gross_M;
+        // Função que compara a receita bruta de dois filmes
+        let measureTotalGross = function(a, b) {
+            return a.Worldwide_Gross_M - b.Worldwide_Gross_M; // Retorna a diferença entre as receitas
         };
 
-        let measureTotalBudget = function (a, b) {
-            return a.Budget_M - b.Budget_M;
+        // Função que compara o orçamento de dois filmes
+        let measureTotalBudget = function(a, b) {
+            return a.Budget_M - b.Budget_M; // Retorna a diferença entre os orçamentos
         };
 
-        let moviesbygross = d3.json("data/movies_d3.json").then(function (json){
-            render (json, measureTotalGross);
+        // Carrega os dados de filmes e renderiza o gráfico de receitas
+        let moviesbygross = d3.json("data/movies_d3.json").then(function(json) {
+            render(json, measureTotalGross); // Chama a função render com os dados e comparador
         });
 
-        let moviesbybudget = d3.json("data/movies_d3.json").then( function (json){
-            render(json, measureTotalBudget);
-        })
+        // Carrega os dados de filmes e renderiza o gráfico de orçamentos
+        let moviesbybudget = d3.json("data/movies_d3.json").then(function(json) {
+            render(json, measureTotalBudget); // Chama a função render com os dados e comparador
+        });
 
+        // Obtém o elemento do seletor de filmes
         var select = document.getElementById("movies");
-        select.addEventListener("change", function(){
+        // Adiciona um ouvinte de eventos para mudanças no seletor
+        select.addEventListener("change", function() {
+            // Verifica qual opção foi selecionada
             if (select.value === "gross") {
-                render(moviesbygross, measureTotalGross);                
+                render(moviesbygross, measureTotalGross); // Renderiza gráfico de receita
             } else if (select.value === "budget") {
-                render(moviesbybudget, measureTotalBudget);
+                render(moviesbybudget, measureTotalBudget); // Renderiza gráfico de orçamento
             }
         });
 
-        /** Exercicio 2**/
-
-        function render2(data, comparator){
-            // criando os elementos HTML que ainda não existem
+        /** Exercicio 2 **/
+        // Função que renderiza o gráfico de barras para orçamento
+        function render2(data, comparator) {
+            // Seleciona o div para o gráfico de orçamentos e vincula os dados
             d3.select("#bar-movies-budget")
                 .selectAll("div.h-bar")
                 .data(data)
                 .enter()
-                .append("div")
-                .attr("class", "h-bar")
-                .append("span");
+                .append("div") // Adiciona um novo div para cada novo dado
+                .attr("class", "h-bar") // Define a classe CSS
+                .append("span"); // Adiciona um span dentro do div
 
-            // atualizar os elementos html que já existem !
+            // Atualiza os elementos existentes
             d3.select("#bar-movies-budget")
                 .selectAll("div.h-bar")
-                .data(data)
-                .attr("class", "h-bar")
-                .style("background-color", "#9B111E")
-                .style("width", function (d) {
-                    return (d.Budget_M) + "px";
+                .data(data) // Vincula novamente os dados
+                .attr("class", "h-bar") // Mantém a classe
+                .style("background-color", "#9B111E") // Define uma cor fixa para as barras
+                .style("width", function(d) {
+                    return (d.Budget_M) + "px"; // Define a largura da barra com base no orçamento
                 })
                 .select("span")
-                .text( function (d) {
-                    return (d.Genre);
+                .text(function(d) {
+                    return (d.Genre); // Define o texto como o gênero do filme
                 });
 
+            // Se um comparador for fornecido, ordena as barras
             if (comparator) {
                 d3.select("#bar-movies-budget").selectAll("div.h-bar").sort(comparator);
             }
         }
 
-        d3.json("data/movies.json").then(function (json){
-            render2(json, measureTotalBudget);
+        // Carrega os dados de filmes e renderiza o gráfico de orçamentos
+        d3.json("data/movies.json").then(function(json) {
+            render2(json, measureTotalBudget); // Chama a função render2 com os dados e comparador
         });
 
     </script> 
