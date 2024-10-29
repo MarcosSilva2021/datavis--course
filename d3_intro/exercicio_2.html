@@ -105,8 +105,16 @@
                 .select("span")
                 .text( function (d) {
                     return (d.Genre);
-                })
+                });
+
+            if (comparator) {
+                d3.select("#bar-movies-budget").selectAll("div.h-bar").sort(comparator);
+            }
         }
+
+        d3.json("data/movies.json").then(function (json){
+            render2(json, measureTotalBudget);
+        });
 
     </script> 
     
