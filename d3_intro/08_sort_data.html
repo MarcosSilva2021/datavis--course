@@ -10,40 +10,51 @@
 <body>
     <div id="chart"></div>
     <script type="text/javascript">
+        // Define a função render que recebe dados e um comparador como argumentos
         function render(data, comparator){
+            // Seleciona o elemento com ID "chart" e busca por todos os divs com a classe "h-bar"
             d3.select("#chart")
                 .selectAll("div.h-bar")
+                // Associa os dados ao conjunto de elementos selecionados
                 .data(data)
+                // Para cada novo elemento, insere um novo div com a classe "h-bar"
                 .enter()
                 .append("div")
-                .attr("class","h-bar")
-                .append("span");
+                .attr("class","h-bar") // Define a classe do div como "h-bar"
+                .append("span"); // Adiciona um elemento <span> dentro do div
 
+            // Seleciona novamente os divs "h-bar" para atualizar suas propriedades
             d3.select("#chart")
                 .selectAll("div.h-bar")
                 .data(data)
+                // Define a largura do div com base na propriedade "despesa" dos dados
                 .attr("width", function (d){
-                    return d.despesa * 10 + "px";
+                    return d.despesa * 10 + "px"; // A largura é 10 vezes o valor da despesa
                 })
                 .select("span")
+                // Define o texto do <span> com base na categoria dos dados
                 .text(function (d) {
-                    return d.categoria;
+                    return d.categoria; // Define o texto como a categoria
                 });
+                // Se um comparador for fornecido, ordena os divs "h-bar" usando esse comparador
                 if (comparator)
                     d3.select("body").selectAll("div.h-bar").sort(comparator);
-    }
+        }
 
-    let comparePorDespesa = function (a, b){
-        return a.despesa - b.despesa;
-    };
+        // Função para comparar despesas, usada para ordenar os dados
+        let comparePorDespesa = function (a, b){
+            return a.despesa - b.despesa; // Retorna a diferença entre as despesas
+        };
 
-    let comparePorCategoria = function (a, b){
-        return a.categoria < b.categoria ? -1 : 1 ;
-    };
+        // Função para comparar categorias, usada para ordenar os dados
+        let comparePorCategoria = function (a, b){
+            return a.categoria < b.categoria ? -1 : 1; // Compara as categorias lexicograficamente
+        };
 
-    d3.json("data/data.json").then(function (json){
-        render(json, comparePorDespesa);
-    });
+        // Carrega dados de um arquivo JSON e chama a função render com esses dados e o comparador de despesas
+        d3.json("data/data.json").then(function (json){
+            render(json, comparePorDespesa); // Renderiza os dados assim que são carregados
+        });
 
     </script>
     
