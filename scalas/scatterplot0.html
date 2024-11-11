@@ -44,7 +44,10 @@
         .domain([0, d3.max(dataset, (d)=> d[0])])
         .range([0, 500]);
 
-    var svg = d3.select("svg").append("g").attr("transform", "translate(50, 50)");
+    var svg = d3
+    .select("svg")
+    .append("g")
+    .attr("transform", "translate(50, 50)");
 
      // criando os elementos dentro de svg
      svg
