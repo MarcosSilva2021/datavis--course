@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
-    <script src="https://d3js.org/d3.v5.min.js"></script>
+  
     <title>add escalas no Scatterplot</title>
 
     <style>
@@ -19,69 +19,64 @@
 
 </head>
 <body>
-    <!-- criou um circulo-->
-    <svg width="500" height="500"></svg>
+  <!-- SVG para o gráfico -->
+  <svg width="500" height="500"></svg>
 
-    <script>
-      //1º vetor de vetores
- let dataset = [
-        [5, 20],
-        [480, 90],
-        [250, 50],
-        [100, 33],
-        [330, 95],
-        [410, 12],
-        [475, 44],
-        [25, 67],
-        [85, 21],
-        [220, 88],
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+      // 1º vetor de vetores
+      let dataset = [
+          [5, 20],
+          [480, 90],
+          [250, 50],
+          [100, 33],
+          [330, 95],
+          [410, 12],
+          [475, 44],
+          [25, 67],
+          [85, 21],
+          [220, 88],
       ];
-    // 2º variaveis
 
+      // 2º Seleção do SVG e criação de grupo (g)
+      var svg = d3
+          .select("svg")
+          .append("g")
+          .attr("transform", "translate(50, 50)"); // desloca o gráfico
 
-    var svg = d3
-    .select("svg")
-    .append("g")
-    .attr("transform", "translate(50, 50)");
+      // 3º Escalas para o eixo X e Y
+      let xScale = d3.scaleLinear()
+          .domain([0, d3.max(dataset, (d) => d[0])]) // o domínio é o máximo de X no dataset
+          .range([0, 400]); // o intervalo de 0 a 400 no gráfico (considerando os 50 pixels de deslocamento)
 
-     //3º add os circulos & vinculando a varaiavel svg
-     // & centro na posição = d[0] & d[1]
-     svg
-        .selectAll("circle")
-        .data(dataset)
-        .enter()
-        .append("circle")
-        //.attr("class", "dot")
-        .attr("cx", (d) => d[0])
-        .attr("cy", (d) => d[1])
-        .attr("r", 5)
-        .style("fill", "black");
+      let yScale = d3.scaleLinear()
+          .domain([0, d3.max(dataset, (d) => d[1])]) // o domínio é o máximo de Y no dataset
+          .range([400, 0]); // o intervalo de 400 a 0 no gráfico (inverte Y para o gráfico ficar "certo")
 
-      // add elementos de texto -nas mesmas posiçoes do centro
-      // dos circulos
+      // 4º Adicionando os círculos
       svg
-        .selectAll("text")
-        .data(dataset)
-        .enter()
-        .append("text")
-        .attr("x", (d) => d[0] + 5)// delocou p/ não soprepor
-        .attr("y", (d) => d[1])
-        .attr('font-family', 'sans-serif')
-        .style("font-size", 12)
-        .style("fill", "red")
-        .text((d) => "(" + d[0] + ", " + d[1] + ")");
+          .selectAll("circle")
+          .data(dataset)
+          .enter()
+          .append("circle")
+          .attr("cx", (d) => xScale(d[0]))  // Aplica a escala X
+          .attr("cy", (d) => yScale(d[1]))  // Aplica a escala Y
+          .attr("r", 5)
+          .style("fill", "black");
 
-            // det Scala
-    let xScale = d3.scaleLinear()
-        .domain([0, d3.max(dataset, (d)=> d[0])])
-        .range([0, 500]);
+      // 5º Adicionando os textos
+      svg
+          .selectAll("text")
+          .data(dataset)
+          .enter()
+          .append("text")
+          .attr("x", (d) => xScale(d[0]) + 5) // Aplica a escala X e desloca um pouco
+          .attr("y", (d) => yScale(d[1]))     // Aplica a escala Y
+          .attr('font-family', 'sans-serif')
+          .style("font-size", 12)
+          .style("fill", "red")
+          .text((d) => "(" + d[0] + ", " + d[1] + ")");
 
-    let yScale = d3.scaleLinear()
-        .domain([0, d3.max(dataset, (d)=> d[1])])
-        .range([0, 500]);
-
-    </script>
-    
-
+  </script>
 </body>
 </html>
