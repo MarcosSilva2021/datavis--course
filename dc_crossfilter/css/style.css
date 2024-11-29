@@ -1,0 +1,21 @@
+/* estilo geral*/
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Content Container*/
+.content {
+    padding: 10px;
+}
+
+/* chart Section*/
+#chart {
+    text-align: center;
+}
+
+#chart h4 {
+    margin-bottom: 15px;
+}
