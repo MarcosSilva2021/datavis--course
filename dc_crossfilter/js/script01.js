@@ -1,10 +1,10 @@
 d3.csv(
     "https://gist.githubusercontent.com/emanueles/d8df8d875edda71aa2e2365fae2ce225/raw/1e949d3da02ed6caa21fe3a7a12a4e5a611a4bab/stocks.csv"
-).then(function (data)){
+).then(function (data){
     // formatando os dados
     let parseDate = d3.timeParse("%Y/%m/%d");
     data.forEach(function (d)  {
-        d.date = parseDate(d.date);
+        d.date = parseDate(d.date);// formatando a base de dados - convertendo
         d.google = +d.google;
         d.facebook = +d.facebook;
     });
@@ -31,5 +31,36 @@ d3.csv(
         .height(400)
         .dimension(dateDimension)
         
-        .margim({})
-}
+        .margins({top: 30, right: 50, bottom: 25, left: 40})
+        .renderArea(false)
+        .x(xScale)
+        .xUnits(d3.timeDays)
+        .renderHorizontalGridLines(true)
+        .legend(dc.legend().x(680).y(10).itemHeight(13).gap(5))
+        .brushOn(false)
+        .group(googleByDayGroup, "Google");
+
+    let compositeChart = dc.compositeChart(document.querySelector("#chart2"));
+
+    compositeChart
+        .width(800)
+        .height(400)
+        .margins({ top: 50, right: 50, bottom: 25, left: 40 })
+    .dimension(dateDimension)
+    .x(xScale)
+    .xUnits(d3.timeDays)
+    .renderHorizontalGridLines(true)
+    .legend(dc.legend().x(700).y(5).itemHeight(13).gap(5))
+    .brushOn(false)
+    .compose([
+        dc
+         .lineChart(compositeChart)
+         .group(googleByDayGroup, "Google")
+         .ordinalColors(["steelblue"]),
+         dc
+         .lineChart(compositeChart)
+         .group(facebookByDayGroup, "Facebook")
+         .ordinalColors(["darkorange"]),
+    ]);
+    dc.renderAll();
+});
