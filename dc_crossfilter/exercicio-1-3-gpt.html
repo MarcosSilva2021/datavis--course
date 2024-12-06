@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter2/1.4.7/crossfilter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/3.0.4/dc.min.js" integrity="sha512-JgaM/suqrnK7deJCoys3HlsPoPgYEWmvJ/qxx7h7Zr4GxIbjfc1w0AJVfQZaDGkZjiv9hhlWZku5PaBJXQh1zg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/3.0.4/dc.min.css" integrity="sha512-+5ap299r2kZ0wAMZhZIFXexjhCgwsihdnYKLN4NoQAdl5si+J24rP5BRw8gTXBeYNHyCSH3h3uxlU0Cxhlwpwg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <title>Movies Box Office Analysis</title>
+    <style>
+      .chart-container {
+        margin-bottom: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row chart-container">
+        <!-- Gráfico por Ano -->
+        <div class="col-md-6" id="by_year">
+          <h4>Box Office by Year</h4>
+        </div>
+        <!-- Gráfico por Gênero -->
+        <div class="col-md-6" id="by_genre">
+          <h4>Box Office by Genre</h4>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/scriptMoveis-gpt.js"></script>
+  </body>
+</html>
+
