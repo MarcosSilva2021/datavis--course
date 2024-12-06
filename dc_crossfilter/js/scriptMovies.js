@@ -6,7 +6,12 @@ d3.json("data/movies.json")
         // Dimensão e grupo por ano
         var yearDimension = ndx.dimension(function (d) {
             return d.Year;
-        })
+        });
 
+        var yearGroup = yearDimension.group().reduceSum(function (d){
+            return d.Worldwide_Group_M;
+        });
     }
- } )
+
+})
+
