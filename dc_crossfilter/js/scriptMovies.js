@@ -1,5 +1,5 @@
 d3.json("data/movies.json")
- .then(function (data) {
+  .then(function (data) {
     try {
         var ndx = crossfilter(data);
 
@@ -8,10 +8,55 @@ d3.json("data/movies.json")
             return d.Year;
         });
 
-        var yearGroup = yearDimension.group().reduceSum(function (d){
-            return d.Worldwide_Group_M;
+        var yearGroup = yearDimension.group().reduceSum(function (d) {
+            return d.Worldwide_Gross_M;
         });
-    }
 
-})
+        // Gráfico de barras por ano
+        var by_year = dc.barChart("#chart-by-year");
+        by_year
+            .width(800)
+            .height(400)
+            .gap(30)
+            .margins({ top: 30, right: 50, bottom: 25, left: 40})
+            .dimension(yearDimension)  // Corrigido para usar a dimensão de ano
+            .group(yearGroup)
+            .x(d3.scaleBand())
+            .xUnits(dc.units.ordinal)  // Corrigido para usar dc.units.ordinal
+            .renderHorizontalGridLines(true)
+            .controlsUseVisibility(true)
+            .brushOn(true)
+            .render();
+
+        // Dimensão e grupo por ano
+        var genreDimension = ndx.dimension(function (d) {
+            return d.Genre;
+        });
+        var genreGroup = genreDimension.group().reduceSum(function (d){
+            return d.Worldwide_Gross_M;
+        });
+
+        // Gráfico de barras por gênero
+        var by_genre = dc.barChart("#chart-by-genre");
+        by_genre
+            .width(800)
+            .height(400)
+            .gap(30)
+            .margins({top: 30, right: 50, bottom: 25, left: 40})
+            .dimension(genreDimension)  // Corrigido para usar a dimensão de gênero
+            .group(genreGroup)
+            .x(d3.scaleBand())
+            .xUnits(dc.units.ordinal)  // Corrigido para usar dc.units.ordinal
+            .renderHorizontalGridLines(true)
+            .controlsUseVisibility(true)
+            .brushOn(true)
+            .render();
+
+    } catch (error) {
+        console.error("Erro ao processar os dados: ", error);
+    }
+  })
+  .catch(function (error) {
+    console.error("Erro ao carregar o arquivo JSON: ", error);
+  });
 
