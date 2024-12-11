@@ -62,7 +62,9 @@
           .domain([0, d3.max(dataset, d => d[1])]) // o domínio é o máximo de Y no dataset
           .range([height, 0]); // o intervalo de 400 a 0 no gráfico (inverte Y para o gráfico ficar "certo")
 
-      let xAxis = d3.axisBottom().scale(xScale)
+      let xAxis = d3.axisBottom().scale(xScale); // criar eixo x
+
+      let yAxis = d3.axisLeft().scale(yScale); // eixo y
 
       // 4º Adicionando os círculos
       svg
@@ -90,7 +92,15 @@
       
       svg
         .append("g")
-        .call(xAxis)
+        .attr("transform", "translate(0,"+ height +")")
+        .call(xAxis);
+
+      svg
+        .append("g")        
+        .call(yAxis);
+
+      
+
         
     render(dataset)
 
