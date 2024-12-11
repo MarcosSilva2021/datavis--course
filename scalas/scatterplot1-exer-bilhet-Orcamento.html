@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <title>Scatterplot - Bilheteira vs Orçamento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .dot {
+            fill: steelblue;
+            stroke: black;
+        }
+    </style>
+</head>
+<body>
+  <p> na célula movies, carregue os dados do arquivo movies.json e faça o que se pede:
+    1 - Construa um scatterplot comparando bilheteria (Worldwide_Gross_M) e orçamento (Budget_M). 
+    Existe alguma correlação entre essas variáveis? Existem outliers? Quais são? </p>
+    <!-- SVG para o gráfico -->
+    <svg width="500" height="500"></svg>
+
+    <script type="text/javascript">
+        // 0º Definindo as margens e as dimensões do gráfico
+        const margin = { top: 40, bottom: 40, right: 40, left: 40 };
+        let height = 400 - margin.top - margin.bottom;
+        let width = 400 - margin.left - margin.right;
+
+        // 1º Carregar dados do arquivo JSON
+        d3.json("data/movies.json").then(function(dataset) {
+            
+            // 2º Seleção do SVG e criação de grupo (g)
+            var svg = d3
+                .select("svg")
+                .append("g")
+                .attr("transform", "translate(50, 50)"); // Desloca o gráfico
+
+            // 3º Escalas para os eixos X (Worldwide_Gross_M) e Y (Budget_M)
+            let xScale = d3.scaleLinear()
+                .domain([0, d3.max(dataset, d => d.Worldwide_Gross_M)])  // O domínio é o máximo da bilheteira
+                .range([0, width]);  // O intervalo vai de 0 a 400 no gráfico
+
+            let yScale = d3.scaleLinear()
+                .domain([0, d3.max(dataset, d => d.Budget_M)])  // O domínio é o máximo do orçamento
+                .range([height, 0]);  // O intervalo vai de 400 a 0 (inverte Y)
+
+            let xAxis = d3.axisBottom().scale(xScale);  // Cria o eixo X
+            let yAxis = d3.axisLeft().scale(yScale);    // Cria o eixo Y
+
+            // 4º Adicionando os círculos (representando os filmes)
+            svg
+                .selectAll("circle")
+                .data(dataset)
+                .enter()
+                .append("circle")
+                .attr("cx", (d) => xScale(d.Worldwide_Gross_M))  // Aplica a escala X para bilheteira
+                .attr("cy", (d) => yScale(d.Budget_M))          // Aplica a escala Y para orçamento
+                .attr("r", 5)                                  // Define o raio do círculo
+                .style("fill", "steelblue");
+
+            // 5º Adicionando os textos (rótulos com o nome do filme)
+            svg
+                .selectAll("text")
+                .data(dataset)
+                .enter()
+                .append("text")
+                .attr("x", (d) => xScale(d.Worldwide_Gross_M) + 5)  // Aplica a escala X e desloca um pouco
+                .attr("y", (d) => yScale(d.Budget_M))                // Aplica a escala Y
+                .attr('font-family', 'sans-serif')
+                .style("font-size", 10)
+                .style("fill", "red")
+                .text((d) => d.Film.substring(0, 15));  // Exibe o nome do filme (limitado a 15 caracteres)
+
+            // 6º Adicionando os eixos X e Y
+            svg
+                .append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+
+            svg
+                .append("g")
+                .call(yAxis);
+
+            // 7º Título do eixo X
+            svg
+                .append("text")
+                .attr("transform", "translate(" + (width / 2) + "," + (height + margin.bottom) + ")")
+                .style("text-anchor", "middle")
+                .attr("font-family", "sans-serif")
+                .attr("font-size", "12px")
+                .text("Bilheteira Mundial (Milhões)");
+
+            // 8º Título do eixo Y
+            svg
+                .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 0 - margin.left)
+                .attr("x", 0 - (height / 2))
+                .attr("dy", "1em")
+                .style("text-anchor", "middle")
+                .attr("font-family", "sans-serif")
+                .attr("font-size", "12px")
+                .text("Orçamento (Milhões)");
+        });
+
+    </script>
+</body>
+</html>
