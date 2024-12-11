@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+  
+    <title>add array dinamico no Scatterplot</title>
+
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+        }
+        .dot {
+          fill: steelblue;
+          stroke: black;
+        }
+      </style>
+
+</head>
+<body>
+  <!-- SVG para o gráfico -->
+  <svg width="500" height="500"></svg>
+
+  
+  <script type="text/javascript">
+    //0º definindo constantes
+      const margin = {top: 40, bottom: 40, right: 40, left: 40};
+
+      let height = 400 - margin.top - margin.bottom;
+      let width = 400 - margin.left - margin.right;
+
+
+      // 1º vetor de vetores
+     // let dataset = [
+          [5, 20],
+          [480, 90],
+          [250, 50],
+          [100, 33],
+          [330, 95],
+          [410, 12],
+          [475, 44],
+          [25, 67],
+          [85, 21],
+          [220, 88],
+          [650, 100]
+      //]; 
+      let dataset = [];
+      let numDataPoints = 50;
+      let xRange = Math.random() * 100;
+      let yRange = Math.random() * 100;
+
+      for (let i=0; i < numDataPoints; i++){
+        let newNumber1 = Math.floor(Math.random() * xRange)
+        let newNumber2 = Math.floor(Math.random() * yRange)
+        dataset.push([newNumber1, newNumber2])
+      }
+
+      // 2º Seleção do SVG e criação de grupo (g)
+      var svg = d3
+          .select("svg")
+          .append("g")
+          .attr("transform", "translate(50, 50)"); // desloca o gráfico
+
+      // 3º Escalas para o eixo X e Y
+      let xScale = d3.scaleLinear()
+          .domain([0, d3.max(dataset, d => d[0])]) // o domínio é o máximo de X no dataset
+          .range([0, width]); // o intervalo de 0 a 400 no gráfico (considerando os 50 pixels de deslocamento)
+
+      let yScale = d3.scaleLinear()
+          .domain([0, d3.max(dataset, d => d[1])]) // o domínio é o máximo de Y no dataset
+          .range([height, 0]); // o intervalo de 400 a 0 no gráfico (inverte Y para o gráfico ficar "certo")
+
+      let xAxis = d3.axisBottom().scale(xScale); // criar eixo x
+
+      let yAxis = d3.axisLeft().scale(yScale); // eixo y
+
+      // 4º Adicionando os círculos
+      svg
+          .selectAll("circle")
+          .data(dataset)
+          .enter()
+          .append("circle")
+          .attr("cx", (d) => xScale(d[0]))  // Aplica a escala X
+          .attr("cy", (d) => yScale(d[1]))  // Aplica a escala Y
+          .attr("r", 5)
+          .style("fill", "black");
+
+      // 5º Adicionando os textos
+      svg
+          .selectAll("text")
+          .data(dataset)
+          .enter()
+          .append("text")
+          .attr("x", (d) => xScale(d[0]) + 5) // Aplica a escala X e desloca um pouco
+          .attr("y", (d) => yScale(d[1]))     // Aplica a escala Y
+          .attr('font-family', 'sans-serif')
+          .style("font-size", 12)
+          .style("fill", "red")
+          .text((d) => "(" + d[0] + ", " + d[1] + ")");
+      
+      svg
+        .append("g")
+        .attr("transform", "translate(0,"+ height +")")
+        .call(xAxis);
+
+      svg
+        .append("g")        
+        .call(yAxis);
+
+      // titulo eixos
+      svg
+        .append("text")
+        .attr("transform", "translate(" + (width/2) +"," + (height + margin.bottom) +")")
+        .style("text-anchor", "middle")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "12px")
+        .text("Eixo X");
+      
+      svg
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x", 0 - (height /2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "12px")
+        .text("Eixo Y");
+
+        
+    render(dataset)
+
+  </script>
+</body>
+</html>
