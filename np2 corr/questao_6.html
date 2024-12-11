@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <title>questão 6</title>
+</head>
+<body>
+
+    <div id="chart"></div>
+    <script type="text/javascript">
+
+    function render(dados) {
+        
+        d3.select("#chart").selectAll("div.h-bar")
+                .data(dados) 
+                .enter().append("div")
+                .attr("class", "h-bar")
+                .append("span")
+                .text(function(d) {
+                    return d.type + ": " + d.price;  // Adiciona o tipo de fruta e o preço
+                });
+         
+        d3.select("#chart").selectAll("div.h-bar")
+                .data(dados)  
+                .attr("class", "h-bar")  
+                .style("width", function(d) {
+                    return (d.price * 150) + "px";
+                });
+                
+        d3.select("body").selectAll("div.h-bar").sort(function(a, b) {
+            return a.price < b.price ? -1 : 1;
+        }); 
+   
+    }
+
+    d3.json("dados/dados.json").then(function(json) {
+        render(json);  
+    });   
+
+      
+    </script>
+    
+</body>
+</html>

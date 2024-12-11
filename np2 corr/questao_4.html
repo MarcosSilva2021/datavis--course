@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <title>questão 4 </title>
+</head>
+<body>
+    <p> gera uma gráfico de barras com base no array</p>
+    <script type="text/javascript">
+        let dados = [45, 55, 30, 50, 70, 12, 54, 88, 20, 10, 2]
+
+        function render(dados){
+            d3.select("body").selectAll("div.h-bar")
+            .data(dados)
+            .enter()
+            .append("div")
+            .attr("class", "h-bar")
+            .style("width", function (d){
+                return (d) + "px";
+            })
+            .append("span")
+            .text( function (d) {return d;});
+        }
+    render(dados);    
+
+    </script>
+    
+</body>
+</html>

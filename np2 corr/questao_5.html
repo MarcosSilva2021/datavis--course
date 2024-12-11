@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <title>questão 5</title>
+</head>
+<body>
+    <p> gerra uma visualização de barras de um array json do link</p>
+    <div id="chart"></div>
+    <script type="text/javascript">
+
+    function render(dados) {
+        // Primeiro, cria as barras
+        d3.select("#chart").selectAll("div.h-bar") // Seleciona o elemento no qual as barras serão inseridas
+                .data(dados) 
+                .enter().append("div")
+                .attr("class", "h-bar")
+                .append("span");    
+
+        // Em seguida, define o estilo das barras
+        d3.select("#chart").selectAll("div.h-bar")
+                .data(dados)  
+                .attr("class", "h-bar")  
+                .style("width", function(d) {
+                    return (d.price * 50) + "px"; // A largura é proporcional ao valor do "price"
+                })
+                .select("span") 
+                    .text(function(d) {
+                        return d.price;  // O valor do "price" é exibido dentro da barra
+                    });
+    }
+    d3.json("dados/dados.json")
+       .then(function(json) {
+            render(json);
+    })
+        .catch(function(error) {
+            console.log("Erro ao carregar o arquivo JSON: ", error);
+    });   
+
+      
+    </script>
+    
+</body>
+</html>
+
+
+
+
