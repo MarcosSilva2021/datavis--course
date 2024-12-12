@@ -1,48 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter2/1.4.7/crossfilter.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/3.0.4/dc.min.js" integrity="sha512-JgaM/suqrnK7deJCoys3HlsPoPgYEWmvJ/qxx7h7Zr4GxIbjfc1w0AJVfQZaDGkZjiv9hhlWZku5PaBJXQh1zg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/3.0.4/dc.min.css" integrity="sha512-+5ap299r2kZ0wAMZhZIFXexjhCgwsihdnYKLN4NoQAdl5si+J24rP5BRw8gTXBeYNHyCSH3h3uxlU0Cxhlwpwg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <title>exercico crosfilter 1-3</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter2/1.4.7/crossfilter.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/3.0.4/dc.min.js"
+    integrity="sha512-JgaM/suqrnK7deJCoys3HlsPoPgYEWmvJ/qxx7h7Zr4GxIbjfc1w0AJVfQZaDGkZjiv9hhlWZku5PaBJXQh1zg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/3.0.4/dc.min.css"
+    integrity="sha512-+5ap299r2kZ0wAMZhZIFXexjhCgwsihdnYKLN4NoQAdl5si+J24rP5BRw8gTXBeYNHyCSH3h3uxlU0Cxhlwpwg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <title>exercico crosfilter 1-3</title>
 </head>
+
 <body>
-    <div><p> Crie uma célula chamada by_year e nela construa um gráfico de
+  <div>
+    <p> Crie uma célula chamada by_year e nela construa um gráfico de
       barras das bilheterias com o total apurado nas bilheterias para
       cada ano.</b>
       Crie uma célula chamada by_genre e construa um gráfico de
-      barras das bilheterias com o total apurado por Gênero de filme</p></div>
-    <div id="chart-by-year"></div>
-    <div id="chart-by-genre"></div>
-    <script type="text/javascript">
-      d3.json("data/movies.json")
-  .then(function (data) {
-    try {
-        var ndx = crossfilter(data);
+      barras das bilheterias com o total apurado por Gênero de filme</p>
+  </div>
+  <div id="chart-by-year"></div>
+  <div id="chart-by-genre"></div>
+  <script type="text/javascript">
+    d3.json("data/movies.json")
+      .then(function (data) {
+        try {
+          var ndx = crossfilter(data);
 
-        // Dimensão e grupo por ano
-        var yearDimension = ndx.dimension(function (d) {
+          // Dimensão e grupo por ano
+          var yearDimension = ndx.dimension(function (d) {
             return d.Year;
-        });
+          });
 
-        var yearGroup = yearDimension.group().reduceSum(function (d) {
+          var yearGroup = yearDimension.group().reduceSum(function (d) {
             return d.Worldwide_Gross_M;
-        });
+          });
 
-        // Gráfico de barras por ano
-        var by_year = dc.barChart("#chart-by-year");
-        by_year
+          // Gráfico de barras por ano
+          var by_year = dc.barChart("#chart-by-year");
+          by_year
             .width(800)
             .height(400)
             .gap(30)
-            .margins({ top: 30, right: 50, bottom: 25, left: 40})
+            .margins({ top: 30, right: 50, bottom: 25, left: 40 })
             .dimension(yearDimension)  // Corrigido para usar a dimensão de ano
             .group(yearGroup)
             .x(d3.scaleBand())
@@ -52,21 +57,21 @@
             .brushOn(true)
             .render();
 
-        // Dimensão e grupo por ano
-        var genreDimension = ndx.dimension(function (d) {
+          // Dimensão e grupo por ano
+          var genreDimension = ndx.dimension(function (d) {
             return d.Genre;
-        });
-        var genreGroup = genreDimension.group().reduceSum(function (d){
+          });
+          var genreGroup = genreDimension.group().reduceSum(function (d) {
             return d.Worldwide_Gross_M;
-        });
+          });
 
-        // Gráfico de barras por gênero
-        var by_genre = dc.barChart("#chart-by-genre");
-        by_genre
+          // Gráfico de barras por gênero
+          var by_genre = dc.barChart("#chart-by-genre");
+          by_genre
             .width(800)
             .height(400)
             .gap(30)
-            .margins({top: 30, right: 50, bottom: 25, left: 40})
+            .margins({ top: 30, right: 50, bottom: 25, left: 40 })
             .dimension(genreDimension)  // Corrigido para usar a dimensão de gênero
             .group(genreGroup)
             .x(d3.scaleBand())
@@ -76,16 +81,17 @@
             .brushOn(true)
             .render();
 
-    } catch (error) {
-        console.error("Erro ao processar os dados: ", error);
-    }
-  })
-  .catch(function (error) {
-    console.error("Erro ao carregar o arquivo JSON: ", error);
-  });
+        } catch (error) {
+          console.error("Erro ao processar os dados: ", error);
+        }
+      })
+      .catch(function (error) {
+        console.error("Erro ao carregar o arquivo JSON: ", error);
+      });
 
 
-    </script>
-    
+  </script>
+
 </body>
+
 </html>
