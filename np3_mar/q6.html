@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Barras com D3.js</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+</head>
+<body>
+    <h1>Gráfico de Barras Simples</h1>
+    <script>
+        // Função para gerar 20 valores aleatórios
+        function generateScatterData() {
+            let data = [];
+            for (let i = 0; i < 20; i++) {
+                data.push(Math.floor(Math.random() * 100)); // Valores de 0 a 99
+            }
+            return data;
+        }
+
+        // Dados gerados
+        const data = generateScatterData();
+
+        // Dimensões do SVG
+        const width = 500;
+        const height = 300;
+
+        // Escala X (largura das barras)
+        const xScale = d3.scaleBand()
+            .domain(data.map((_, i) => i)) // Índices dos dados (0 a 19)
+            .range([0, width]) // Largura total do gráfico
+            .padding(0.1); // Espaçamento entre barras
+
+        // Escala Y (altura das barras)
+        const yScale = d3.scaleLinear()
+            .domain([0, d3.max(data)]) // Máximo valor do array
+            .range([height, 0]); // Altura invertida (origem no canto inferior)
+
+        // Criando o SVG
+        const svg = d3.select("body")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        // Adicionando as barras
+        svg.selectAll("rect")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("x", (_, i) => xScale(i)) // Posição no eixo X
+            .attr("y", d => yScale(d)) // Altura com base no valor
+            .attr("width", xScale.bandwidth()) // Largura da barra
+            .attr("height", d => height - yScale(d)) // Altura da barra
+            .attr("fill", "steelblue");
+    </script>
+</body>
+</html>
